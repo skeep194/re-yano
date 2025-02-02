@@ -1,7 +1,13 @@
 // Require the necessary discord.js classes
 import { Client, Events, GatewayIntentBits, MessageFlags } from 'discord.js';
-import { token } from './config.json';
+import { token, erAPIKey } from './config.json';
 import { deployCommands, readAllCommands } from './src/commands';
+import axios from 'axios';
+
+// axios setting for bser API
+axios.defaults.baseURL = 'https://open-api.bser.io';
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.headers.common['x-api-key'] = erAPIKey;
 
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
