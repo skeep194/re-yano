@@ -1,8 +1,8 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { SlashCommand } from '../../../type';
+import { createSlashCommand, SlashCommand } from '../../../type';
 import { getTopRankers } from '../../API/rank';
 
-export default {
+export default createSlashCommand({
   data: new SlashCommandBuilder()
     .setName('컷')
     .setDescription('이터니티 컷(300등)과 데미갓 컷(1000등)을 보여줍니다.'),
@@ -20,4 +20,4 @@ export default {
 
     interaction.reply(`이터니티 - ${eternityCut}점\n데미갓 - ${demigodCut}점`);
   },
-} as SlashCommand;
+});

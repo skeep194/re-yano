@@ -10,3 +10,7 @@ export interface SlashCommand {
     interaction: ChatInputCommandInteraction<CacheType>
   ) => Promise<void>;
 }
+
+export function createSlashCommand(data: SlashCommand) {
+  return data;
+}
