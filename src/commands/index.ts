@@ -5,7 +5,7 @@ import path from 'node:path';
 import { SlashCommand } from '../../type';
 
 export const readAllCommands = () => {
-  const commands: string[] = [];
+  const commands: unknown[] = [];
   const commandCollection = new Collection<string, SlashCommand>();
   // Grab all the command folders from the commands directory you created earlier
   const foldersPath = __dirname;
@@ -23,7 +23,7 @@ export const readAllCommands = () => {
     // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
     for (const file of commandFiles) {
       const filePath = path.join(commandsPath, file);
-      const command = require(filePath).default;
+      const command = require(filePath).default as SlashCommand;
       if ('data' in command && 'execute' in command) {
         commands.push(command.data.toJSON());
         commandCollection.set(command.data.name, command);
@@ -41,7 +41,7 @@ export const readAllCommands = () => {
 const rest = new REST().setToken(token);
 
 // and deploy your commands!
-export const deployCommands = async (commands: string[]) => {
+export const deployCommands = async (commands: unknown[]) => {
   try {
     console.log(
       `Started refreshing ${commands.length} application (/) commands.`
