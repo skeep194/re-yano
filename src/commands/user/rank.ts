@@ -9,12 +9,17 @@ export default createSlashCommand({
     .setName('랭킹')
     .setDescription('이 서버에 등록된 유저 랭킹을 보여줍니다.'),
   execute: async (interaction) => {
+    await interaction.deferReply();
     const data = await prismaClient.discordERUser.findMany({
       where: {
         guildId: interaction.guildId,
         discordId: interaction.guildId ? undefined : interaction.user.id,
       },
     });
+    if (data.length === 0) {
+      interaction.editReply('등록된 사용자가 아직 없습니다.');
+      return;
+    }
 
     const result = (
       await Promise.all(
@@ -31,6 +36,6 @@ export default createSlashCommand({
       .sort((a, b) => b.mmr - a.mmr)
       .map((value, index) => `${index}. ${value.message}`)
       .join('\n');
-    interaction.reply(result);
+    interaction.editReply(result);
   },
 });
