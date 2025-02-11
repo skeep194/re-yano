@@ -37,7 +37,7 @@ export default createSlashCommand({
             erUserStat
               .map((value) =>
                 [
-                  `${value.mmr}점(${value.rank})위`,
+                  `${value.mmr}점(${value.rank}위)`,
                   `판수 - ${value.totalGames}`,
                   `우승 횟수 - ${value.totalWins}`,
                   `평균 순위 - ${value.averageRank}`,
