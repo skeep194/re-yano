@@ -21,12 +21,15 @@ export default createSlashCommand({
       return;
     }
 
+    const checkExist: Record<string, boolean> = {};
+
     const result = (
       await Promise.all(
         data.map(async ({ discordId, erId }) => {
           const discordUser = await discordClient.users.fetch(discordId);
           const erUser = await getUserRank(erId);
           return {
+            discordId: discordUser.id,
             mmr: erUser.mmr,
             message: `${erUser.nickname}(${discordUser.displayName}) - ${erUser.mmr}점, ${erUser.rank}위`,
           };
@@ -34,6 +37,13 @@ export default createSlashCommand({
       )
     )
       .sort((a, b) => b.mmr - a.mmr)
+      .filter((value) => {
+        if (checkExist[value.discordId] == null) {
+          checkExist[value.discordId] = true;
+          return true;
+        }
+        return false;
+      })
       .map((value, index) => `${index}. ${value.message}`)
       .join('\n');
     interaction.editReply(result);
