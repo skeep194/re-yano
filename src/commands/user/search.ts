@@ -3,6 +3,8 @@ import { createSlashCommand } from '../../../type';
 import { getUserStats } from '../../API/user';
 import { prismaClient } from '../../util/externalClient';
 import { getUserRank } from '../../API/rank';
+import { tierStringFromMMR } from '../../util/tier';
+import { getCurrentSeason } from '../../API/data';
 
 export default createSlashCommand({
   data: new SlashCommandBuilder()
@@ -27,6 +29,11 @@ export default createSlashCommand({
       interaction.reply('등록되지 않은 사용자입니다.');
       return;
     }
+    const season = await getCurrentSeason();
+    if (season == null) {
+      interaction.reply('시즌 정보를 불러오는 데 실패했습니다.');
+      return;
+    }
     const result = (
       await Promise.all(
         serverUser.map(async (value) => {
@@ -37,7 +44,7 @@ export default createSlashCommand({
             erUserStat
               .map((value) =>
                 [
-                  `${value.mmr}점(${value.rank}위)`,
+                  `${value.mmr}점 ${tierStringFromMMR(value.mmr, season.seasonID, value.rank)} (${value.rank}위)`,
                   `판수 - ${value.totalGames}`,
                   `우승 횟수 - ${value.totalWins}`,
                   `평균 순위 - ${value.averageRank}`,

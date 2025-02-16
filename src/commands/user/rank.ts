@@ -1,8 +1,9 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { createSlashCommand } from '../../../type';
 import { discordClient, prismaClient } from '../../util/externalClient';
-import { getUserStats } from '../../API/user';
 import { getUserRank } from '../../API/rank';
+import { tierStringFromMMR } from '../../util/tier';
+import { getCurrentSeason } from '../../API/data';
 
 export default createSlashCommand({
   data: new SlashCommandBuilder()
@@ -20,6 +21,12 @@ export default createSlashCommand({
       interaction.editReply('등록된 사용자가 아직 없습니다.');
       return;
     }
+    const season = await getCurrentSeason();
+
+    if (season == null) {
+      interaction.editReply('시즌 정보를 불러오는 데 실패했습니다.');
+      return;
+    }
 
     const checkExist: Record<string, boolean> = {};
 
@@ -27,11 +34,11 @@ export default createSlashCommand({
       await Promise.all(
         data.map(async ({ discordId, erId }) => {
           const discordUser = await discordClient.users.fetch(discordId);
-          const erUser = await getUserRank(erId);
+          const erUser = await getUserRank(erId, season.seasonID);
           return {
             discordId: discordUser.id,
             mmr: erUser.mmr,
-            message: `${erUser.nickname}(${discordUser.displayName}) - ${erUser.mmr}점, ${erUser.rank}위`,
+            message: `${erUser.nickname}(${discordUser.displayName}) - ${erUser.mmr}점 (${tierStringFromMMR(erUser.mmr, season.seasonID, erUser.rank)}), ${erUser.rank}위`,
           };
         })
       )
