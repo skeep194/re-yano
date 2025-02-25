@@ -35,3 +35,18 @@ export async function getUserStats(userNum: number, seasonId?: number) {
       throw APIErrorMessage;
   }
 }
+
+export async function getUserGames(userNum: number) {
+  const response = await axios.get<APIResponse<UserGame[]>>(
+    `/v1/user/games/${userNum}`
+  );
+  if (response.data.code === 200) {
+    return response.data.userGames;
+  }
+  switch (response.data.code) {
+    case HttpStatusCode.NotFound:
+      throw '존재하지 않는 이터널 리턴 유저입니다.';
+    default:
+      throw APIErrorMessage;
+  }
+}

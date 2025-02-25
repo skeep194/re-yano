@@ -1,9 +1,10 @@
 // Require the necessary discord.js classes
-import { Client, Events, GatewayIntentBits, MessageFlags } from 'discord.js';
+import { Events, MessageFlags } from 'discord.js';
 import { token, erAPIKey } from './config.json';
 import { deployCommands, readAllCommands } from './src/commands';
 import axios from 'axios';
-import { discordClient } from './src/util/externalClient';
+import { discordClient, prismaClient } from './src/util/externalClient';
+import './src/scheduler';
 
 // axios setting for bser API
 axios.defaults.baseURL = 'https://open-api.bser.io';
@@ -36,18 +37,33 @@ discordClient.on(Events.InteractionCreate, async (interaction) => {
     return;
   }
 
+  const guildId = interaction.guildId;
+  const discordId = interaction.user.id;
+
   try {
+    if (
+      (await prismaClient.systemUser.count({
+        where: { guildId: guildId, discordId: discordId },
+      })) === 0
+    ) {
+      await prismaClient.systemUser.create({
+        data: {
+          discordId: discordId,
+          guildId: guildId,
+        },
+      });
+    }
     await command.execute(interaction);
   } catch (error) {
     console.error(error);
     if (interaction.replied || interaction.deferred) {
       await interaction.followUp({
-        content: 'There was an error while executing this command!',
+        content: error as string,
         flags: MessageFlags.Ephemeral,
       });
     } else {
       await interaction.reply({
-        content: 'There was an error while executing this command!',
+        content: error as string,
         flags: MessageFlags.Ephemeral,
       });
     }

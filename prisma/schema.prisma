@@ -17,3 +17,31 @@ model DiscordERUser {
   guildId String?
   erId Int
 }
+
+model SystemUser {
+  id Int @id @default(autoincrement())
+  point Int @default(50)
+  @@unique([discordId, guildId])
+  discordId String
+  guildId String?
+  lastAttendanceTime DateTime @default("1970-01-01T00:00:00.000Z")
+  ObserveRankGame ObserveRankGame[]
+}
+
+enum ObserveRankGameStatus {
+  WATCHING
+  DONE
+}
+
+model ObserveRankGame {
+  id Int @id @default(autoincrement())
+  @@unique([erId, systemUserid])
+  erId Int
+  systemUser SystemUser @relation(fields: [systemUserid], references: [id])
+  systemUserid Int
+  status ObserveRankGameStatus @default(WATCHING)
+  createAt DateTime @default(now())
+  batPoint Int
+  channelId String
+  expectedRank Int
+}

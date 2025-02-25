@@ -28,6 +28,9 @@ export async function getUserRank(
   }
   switch (response.data.code) {
     case HttpStatusCode.NotFound:
+      console.error(
+        `[API] getUserRank: eternal return ${userNum} user id not found error`
+      );
       throw '존재하지 않는 이터널 리턴 유저입니다.';
     default:
       throw APIErrorMessage;
