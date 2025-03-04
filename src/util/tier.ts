@@ -2,6 +2,7 @@ export interface Tier {
   startMMR: number;
   interval: number;
   name: string;
+  matchingRanges?: number[];
   ratingCut?: number;
   isOneInterval?: boolean;
 }
@@ -45,6 +46,7 @@ export const seasonTier: Record<number, Tier[]> = {
       interval: 0,
       startMMR: 7000,
       isOneInterval: true,
+      matchingRanges: [7000, 7500, 8000],
     },
     {
       name: '데미갓',
@@ -78,6 +80,15 @@ export function tierStringFromMMR(mmr: number, season: number, rank?: number) {
     // 미스릴 메라
     if (value.isOneInterval && value.startMMR <= mmr) {
       result = value.name;
+      if (value.matchingRanges) {
+        let range = 0;
+        value.matchingRanges.forEach((value) => {
+          if (mmr >= value) {
+            range += 1;
+          }
+        });
+        result += ` 매칭 구간 ${range}`;
+      }
       return;
     }
 
