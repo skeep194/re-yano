@@ -46,7 +46,7 @@ export const seasonTier: Record<number, Tier[]> = {
       interval: 0,
       startMMR: 7000,
       isOneInterval: true,
-      matchingRanges: [7000, 7500, 8000],
+      matchingRanges: [7000, 7500, 8100],
     },
     {
       name: '데미갓',
