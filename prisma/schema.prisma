@@ -45,3 +45,18 @@ model ObserveRankGame {
   channelId String
   expectedRank Int
 }
+
+model ErArticle {
+  id Int @id
+  thumbnailUrl String
+  createAt DateTime
+  updateAt DateTime
+  url String
+  title String
+  summary String
+}
+
+model ArticleSubscribe {
+  id Int @id @default(autoincrement())
+  channelId String @unique
+}
