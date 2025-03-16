@@ -48,7 +48,7 @@ model ObserveRankGame {
 
 model ErArticle {
   id Int @id
-  thumbnailUrl String
+  thumbnailUrl String?
   createAt DateTime
   updateAt DateTime
   url String
