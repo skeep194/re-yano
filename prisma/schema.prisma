@@ -35,7 +35,6 @@ enum ObserveRankGameStatus {
 
 model ObserveRankGame {
   id Int @id @default(autoincrement())
-  @@unique([erId, systemUserid])
   erId Int
   systemUser SystemUser @relation(fields: [systemUserid], references: [id])
   systemUserid Int

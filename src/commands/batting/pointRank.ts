@@ -7,6 +7,7 @@ export default createSlashCommand({
     .setName('포인트랭킹')
     .setDescription('서버의 포인트 랭킹을 보여줍니다.'),
   execute: async (interaction) => {
+    await interaction.deferReply();
     const guildId = interaction.guildId;
     const allUser = await prismaClient.systemUser.findMany({
       where: { guildId: guildId },
@@ -26,6 +27,6 @@ export default createSlashCommand({
         })
       )
     ).join('\n');
-    interaction.reply(result);
+    interaction.editReply(result);
   },
 });
