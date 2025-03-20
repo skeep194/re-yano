@@ -63,6 +63,116 @@ export const seasonTier: Record<number, Tier[]> = {
       isOneInterval: true,
     },
   ],
+  30: [
+    { name: '아이언', interval: 150, startMMR: 0 },
+    {
+      name: '브론즈',
+      interval: 200,
+      startMMR: 600,
+    },
+    {
+      name: '실버',
+      interval: 250,
+      startMMR: 1400,
+    },
+    {
+      name: '골드',
+      interval: 300,
+      startMMR: 2400,
+    },
+    {
+      name: '플래티넘',
+      interval: 350,
+      startMMR: 3600,
+    },
+    {
+      name: '다이아몬드',
+      interval: 350,
+      startMMR: 5000,
+    },
+    {
+      name: '메테오라이트',
+      interval: 600,
+      startMMR: 6400,
+      isOneInterval: true,
+    },
+    {
+      name: '미스릴',
+      interval: 0,
+      startMMR: 7000,
+      isOneInterval: true,
+      matchingRanges: [7000, 7500, 8100],
+    },
+    {
+      name: '데미갓',
+      interval: 0,
+      startMMR: 7700,
+      ratingCut: 1000,
+      isOneInterval: true,
+    },
+    {
+      name: '이터니티',
+      interval: 0,
+      startMMR: 7700,
+      ratingCut: 300,
+      isOneInterval: true,
+    },
+  ],
+  31: [
+    { name: '아이언', interval: 150, startMMR: 0 },
+    {
+      name: '브론즈',
+      interval: 200,
+      startMMR: 600,
+    },
+    {
+      name: '실버',
+      interval: 250,
+      startMMR: 1400,
+    },
+    {
+      name: '골드',
+      interval: 300,
+      startMMR: 2400,
+    },
+    {
+      name: '플래티넘',
+      interval: 350,
+      startMMR: 3600,
+    },
+    {
+      name: '다이아몬드',
+      interval: 350,
+      startMMR: 5000,
+    },
+    {
+      name: '메테오라이트',
+      interval: 600,
+      startMMR: 6400,
+      isOneInterval: true,
+    },
+    {
+      name: '미스릴',
+      interval: 0,
+      startMMR: 7000,
+      isOneInterval: true,
+      matchingRanges: [7000, 7500, 8100],
+    },
+    {
+      name: '데미갓',
+      interval: 0,
+      startMMR: 7700,
+      ratingCut: 1000,
+      isOneInterval: true,
+    },
+    {
+      name: '이터니티',
+      interval: 0,
+      startMMR: 7700,
+      ratingCut: 300,
+      isOneInterval: true,
+    },
+  ],
 };
 
 export function tierStringFromMMR(mmr: number, season: number, rank?: number) {
