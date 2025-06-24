@@ -7,5 +7,5 @@ export async function getSeasonData() {
 
 export async function getCurrentSeason() {
   const seasonAll = await getSeasonData();
-  return seasonAll.find((value) => value.isCurrent !== 0);
+  return seasonAll[seasonAll.length - 1];
 }
