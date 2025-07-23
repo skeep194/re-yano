@@ -147,16 +147,15 @@ export const seasonTier: Record<number, Tier[]> = {
     },
     {
       name: '메테오라이트',
-      interval: 600,
+      interval: 700,
       startMMR: 6400,
       isOneInterval: true,
     },
     {
       name: '미스릴',
       interval: 0,
-      startMMR: 7000,
+      startMMR: 7100,
       isOneInterval: true,
-      matchingRanges: [7000, 7500, 8100],
     },
     {
       name: '데미갓',
@@ -176,7 +175,7 @@ export const seasonTier: Record<number, Tier[]> = {
 };
 
 export function tierStringFromMMR(mmr: number, season: number, rank?: number) {
-  const data = seasonTier[season];
+  const data = seasonTier[31];
   let result = '';
   data.forEach((value) => {
     // 데미 이터
