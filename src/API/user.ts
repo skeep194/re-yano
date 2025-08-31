@@ -23,7 +23,7 @@ export async function getUserStats(userNum: number, seasonId?: number) {
     seasonId = (await getCurrentSeason())?.seasonID;
   }
   const response = await axios.get<APIResponse<UserStat[]>>(
-    `/v1/user/stats/${userNum}/${seasonId}`
+    `/v2/user/stats/${userNum}/${seasonId}/${seasonId === 0 ? 2 : 3}`
   );
   if (response.data.code === 200) {
     return response.data.userStats;
