@@ -18,20 +18,20 @@ interface Season {
 }
 
 interface UserRank {
-  userNum: number;
+  userId: string;
   nickname: string;
   rank: number;
   mmr: number;
 }
 
 interface UserNickname {
-  userNum: number;
+  userId: string;
   nickname: string;
 }
 
 interface UserStat {
   seasonId: number;
-  userNum: number;
+  userId: string;
   matchingMode: number;
   matchingTeamMode: number;
   mmr: number;
@@ -68,7 +68,7 @@ interface CharacterStat {
 }
 
 interface UserOneRank {
-  userNum: number;
+  userId: string;
   serverCode: number;
   mmr: number;
   serverRank: number;
@@ -77,7 +77,7 @@ interface UserOneRank {
 }
 
 interface UserGame {
-  userNum: number;
+  userId: string;
   nickname: string;
   gameId: number;
   seasonId: number;
@@ -191,21 +191,21 @@ interface UserGame {
   teamKill: number;
   totalFieldKill: number;
   accountLevel: number;
-  killerUserNum: number;
+  killeruserId: string;
   killer: string;
   killDetail: string;
   causeOfDeath: string;
   placeOfDeath: string;
   killerCharacter: string;
   killerWeapon: string;
-  killerUserNum2: number;
+  killeruserId2: string;
   killer2: string;
   killDetail2: string;
   causeOfDeath2: string;
   placeOfDeath2: string;
   killerCharacter2: string;
   killerWeapon2: string;
-  killerUserNum3: number;
+  killeruserId3: string;
   fishingCount: number;
   useEmoticonCount: number;
   expireDtm: string;

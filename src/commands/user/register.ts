@@ -1,6 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { createSlashCommand } from '../../../type';
-import { getUserByNickname } from '../../API/user';
 import { prismaClient } from '../../util/externalClient';
 
 export default createSlashCommand({
@@ -22,14 +21,13 @@ export default createSlashCommand({
       if (erNickname == null) {
         throw '이터널 리턴 닉네임을 입력 해 주세요. /등록 [이터널 리턴 닉네임]';
       }
-      erUserId = (await getUserByNickname(erNickname)).userNum;
       if (
         (await prismaClient.discordERUser.count({
-          where: { erId: erUserId, guildId: guildId, discordId: discordUserId },
+          where: { erNickName: erNickname, guildId: guildId, discordId: discordUserId },
         })) === 0
       ) {
         await prismaClient.discordERUser.create({
-          data: { discordId: discordUserId, guildId: guildId, erId: erUserId },
+          data: { discordId: discordUserId, guildId: guildId, erNickName: erNickname },
         });
       }
       interaction.reply(

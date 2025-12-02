@@ -12,10 +12,10 @@ datasource db {
 
 model DiscordERUser {
   id Int @id @default(autoincrement())
-  @@unique([discordId, erId, guildId])
+  @@unique([discordId, erNickName, guildId])
   discordId String
   guildId String?
-  erId Int
+  erNickName String
 }
 
 model SystemUser {

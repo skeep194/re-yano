@@ -14,16 +14,17 @@ export async function getUserByNickname(nickname: string) {
     case HttpStatusCode.NotFound:
       throw '존재하지 않는 이터널 리턴 유저입니다.';
     default:
-      throw APIErrorMessage;
+      throw 'getUserByNickname API 에러';
   }
 }
 
-export async function getUserStats(userNum: number, seasonId?: number) {
+export async function getUserStats(nickname: string, seasonId?: number) {
   if (seasonId == null) {
     seasonId = (await getCurrentSeason())?.seasonID;
   }
+  const userId = (await getUserByNickname(nickname)).userId;
   const response = await axios.get<APIResponse<UserStat[]>>(
-    `/v2/user/stats/${userNum}/${seasonId}/${seasonId === 0 ? 2 : 3}`
+    `/v2/user/stats/uid/${userId}/${seasonId}/${seasonId === 0 ? 2 : 3}`
   );
   if (response.data.code === 200) {
     return response.data.userStats;
@@ -32,13 +33,14 @@ export async function getUserStats(userNum: number, seasonId?: number) {
     case HttpStatusCode.NotFound:
       throw '존재하지 않는 이터널 리턴 유저입니다.';
     default:
-      throw APIErrorMessage;
+      throw 'getUserStats API 에러';
   }
 }
 
-export async function getUserGames(userNum: number) {
+export async function getUserGames(nickname: string) {
+  const userId = (await getUserByNickname(nickname)).userId;
   const response = await axios.get<APIResponse<UserGame[]>>(
-    `/v1/user/games/${userNum}`
+    `/v1/user/games/uid/${userId}`
   );
   if (response.data.code === 200) {
     return response.data.userGames;
@@ -47,6 +49,6 @@ export async function getUserGames(userNum: number) {
     case HttpStatusCode.NotFound:
       throw '존재하지 않는 이터널 리턴 유저입니다.';
     default:
-      throw APIErrorMessage;
+      throw 'getUserGames API 에러';
   }
 }

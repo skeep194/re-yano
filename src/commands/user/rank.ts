@@ -32,9 +32,9 @@ export default createSlashCommand({
 
     const result = (
       await Promise.all(
-        data.map(async ({ discordId, erId }) => {
+        data.map(async ({ discordId, erNickName }) => {
           const discordUser = await discordClient.users.fetch(discordId);
-          const erUser = await getUserRank(erId, season.seasonID);
+          const erUser = await getUserRank(erNickName, season.seasonID);
           return {
             discordId: discordUser.id,
             mmr: erUser.mmr,

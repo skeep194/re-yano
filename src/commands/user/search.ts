@@ -37,8 +37,8 @@ export default createSlashCommand({
     const result = (
       await Promise.all(
         serverUser.map(async (value) => {
-          const erUserStat = await getUserStats(value.erId);
-          const erUserRank = await getUserRank(value.erId);
+          const erUserStat = await getUserStats(value.erNickName);
+          const erUserRank = await getUserRank(value.erNickName);
           return (
             `${erUserRank.nickname}\n` +
             erUserStat

@@ -1,6 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { createSlashCommand } from '../../../type';
-import { getUserByNickname } from '../../API/user';
 import { prismaClient } from '../../util/externalClient';
 
 export default createSlashCommand({
@@ -17,14 +16,13 @@ export default createSlashCommand({
     const erNickname = interaction.options.getString('닉네임');
     const guildId = interaction.guildId;
     const discordUserId = interaction.user.id;
-    let erUserId: number;
+
     try {
       if (erNickname == null) {
         throw '이터널 리턴 닉네임을 입력 해 주세요. /삭제 [이터널 리턴 닉네임]';
       }
-      erUserId = (await getUserByNickname(erNickname)).userNum;
       const { count } = await prismaClient.discordERUser.deleteMany({
-        where: { discordId: discordUserId, erId: erUserId, guildId: guildId },
+        where: { discordId: discordUserId, 'erNickName': erNickname, guildId: guildId },
       });
       if (count > 0) {
         interaction.reply(

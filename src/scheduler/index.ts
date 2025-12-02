@@ -1,12 +1,5 @@
 import articleCrawler from './article';
-import battingCrawler from './batting';
 import deleteUserScheduler from './userDelete';
-
-(async () => {
-  while (1) {
-    await battingCrawler();
-  }
-})();
 
 (async () => {
   while (1) {

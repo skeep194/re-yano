@@ -7,5 +7,5 @@ export async function getSeasonData() {
 
 export async function getCurrentSeason() {
   const seasonAll = await getSeasonData();
-  return seasonAll[seasonAll.length - 1];
+  return { "seasonID": 35, "seasonEnd": "2026-01-22" };
 }
